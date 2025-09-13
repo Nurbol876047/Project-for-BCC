@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Той - Мерекелерді ұйымдастыру</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -15px;
+        }
+        
+        .col-3 {
+            width: 25%;
+            padding: 0 15px;
+        }
+        
+        .col-4 {
+            width: 33.33%;
+            padding: 0 15px;
+        }
+        
+        .col-6 {
+            width: 50%;
+            padding: 0 15px;
+        }
+        
+        .col-8 {
+            width: 66.66%;
+            padding: 0 15px;
+        }
+        
+        .col-12 {
+            width: 100%;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: #ff6b6b;
+        }
+        
+        .section-title p {
+            color: #777;
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        /* Шапка */
+        .header {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header .row {
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            height: 40px;
+        }
+        
+        .menu-item {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .menu-item:hover {
+            color: #ff6b6b;
+        }
+        
+        .phone-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .phone-icon {
+            margin-right: 10px;
+            height: 20px;
+        }
+        
+        /* Главный баннер */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://turaninfo.kz/rus/wp-content/uploads/2018/10/DSC_9866.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 180px 0 100px;
+            margin-top: 77px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 1s;
+        }
+        
+        /* О нас */
+        .about {
+            background: #f9f9f9;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .about-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Услуги */
+        .services .service-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s;
+            margin-bottom: 30px;
+        }
+        
+        .services .service-box:hover {
+            transform: translateY(-10px);
+        }
+        
+        .services .service-icon {
+            font-size: 2.5rem;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+        
+        .services h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        /* Галерея */
+        .gallery {
+            background: #f9f9f9;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            height: 250px;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        /* Отзывы */
+        .testimonials .testimonial {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            position: relative;
+            padding: 0 20px;
+        }
+        
+        .testimonial-text:before,
+        .testimonial-text:after {
+            content: '"';
+            font-size: 3rem;
+            color: #ff6b6b;
+            position: absolute;
+            opacity: 0.3;
+        }
+        
+        .testimonial-text:before {
+            left: -10px;
+            top: -10px;
+        }
+        
+        .testimonial-text:after {
+            right: -10px;
+            bottom: -30px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        /* Контакты */
+        .contact {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://sun9-26.userapi.com/T3slbGfOZN9Z2I_wZj_CNFotu88hNbf_xwHTNw/r56jcsAVhbc.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            color: #333;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .contact-info {
+            margin-top: 40px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        
+        /* Футер */
+        footer {
+            background: #222;
+            color: white;
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+        
+        .footer-links h4 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links a {
+            display: block;
+            color: #ddd;
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #ff6b6b;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #444;
+            color: white;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: #ff6b6b;
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            padding-top: 20px;
+            border-top: 1px solid #444;
+        }
+        
+        /* Анимации */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .col-4, .col-6, .col-8 {
+                width: 100%;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                margin-top: 30px;
+            }
+            
+            .header .row {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            .menu-item {
+                margin: 0 15px;
+            }
+            
+            .hero {
+                padding: 150px 0 80px;
+                margin-top: 126px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .footer-content > div {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+        }
+        
+        /* Стили для добавленной формы контактов */
+        .contact-section {
+            background-color: #f9f9f9;
+            padding: 80px 0;
+        }
+        
+        .contact-section .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #2c3e50;
+            position: relative;
+        }
+        
+        .contact-section .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #e74c3c;
+            margin: 15px auto;
+        }
+        
+        .contact-section .contact-form {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-section .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .contact-section .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        .contact-section .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .contact-section textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .contact-section .btn-primary {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .contact-section .btn-primary:hover {
+            background-color: #c0392b;
+        }
+        
+        .contact-section .contact-info {
+            margin-top: 40px;
+        }
+        
+        .contact-section .info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .contact-section .info-item i {
+            font-size: 24px;
+            color: #e74c3c;
+            margin-right: 15px;
+        }
+        
+        /* Стили для добавленного футера */
+        .custom-footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .custom-footer .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .custom-footer .social-links {
+            margin: 20px 0;
+        }
+        
+        .custom-footer .social-links a {
+            color: white;
+            margin: 0 10px;
+            font-size: 20px;
+        }
+        
+        .custom-footer .copyright {
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-6" style="display: flex; align-items: center;">
+                    <a href="/">
+                        <img width="194" height="37" alt="logo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTk0IiBoZWlnaHQ9IjM3IiB2aWV3Qm94PSIwIDAgMTk0IDM3IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0zMCAxMC41QzMxLjY1NjkgOC44NDMxNSAzMy43ODEzIDcuNzUgMzYuMTI1IDcuNzVDMzguNDY4OCA3Ljc1IDQwLjU5MzEgOC44NDMxNSA0Mi4yNSAxMC41TDQyLjI1IDcuNzVINTVWMTguNjI1QzU1IDI1LjA2MjUgNDkuNjg3NSAzMC4zNzUgNDMuMjUgMzAuMzc1QzM2LjgxMjUgMzAuMzc1IDMxLjUgMjUuMDYyNSAzMS41IDE4LjYyNVY3Ljc1SDQyLjI1VjEwLjVDNDAuNTkzMSA4Ljg0MzE1IDM4LjQ2ODggNy43NSAzNi4xMjUgNy43NUMzMy43ODEzIDcuNzUgMzEuNjU2OSA4Ljg0MzE1IDMwIDEwLjVWMTAuNVoiIGZpbGw9IiNmZjZiNmIiLz48cGF0aCBkPSJNODYuNSA3Ljc1VjI5LjI1SDczLjc1VjE4LjYyNUM3My43NSAxMi4xODc1IDc5LjA2MjUgNy44NzUgODUuNSA3Ljg3NUM4NS44IDcuODc1IDg2LjE1IDcuODk1ODMgODYuNSA3LjkzNzVWNy43NVoiIGZpbGw9IiNmZjZiNmIiLz48cGF0aCBkPSJNMTE2LjI1IDcuNzVWMTguNjI1QzExNi4yNSAyNS4wNjI1IDExMC45Mzc1IDMwLjM3NSAxMDQuNSAzMC4zNzVDOTguMDYyNSAzMC4zNzUgOTIuNzUgMjUuMDYyNSA5Mi43NSAxOC42MjVWNy43NUgxMDUuNVYxOC42MjVDMTA1LjUgMTkuODI4MSAxMDYuNDQ2OSAyMC43NzUgMTA3LjY1IDIwLjc3NUMxMDguODUzMSAyMC43NzUgMTA5LjggMTkuODI4MSAxMDkuOCAxOC42MjVWNy43NUgxMTYuMjVaIiBmaWxsPSIjZmY2YjZiIi8+PHBhdGggZD0iTTEzMi4xMjUgMzAuMjVWMTQuNzVDMTMyLjEyNSAxMi4wNjI1IDEzNC4xODc1IDEwIDEzNi44NzUgMTBDMTM5LjU2MjUgMTAgMTQxLjYyNSAxMi4wNjI1IDE0MS42MjUgMTQuNzVWMzAuMjVIMTU0LjM3NVYxNC43NUMxNTQuMzc1IDcuMDg3NSAxNDguMTg3NSAxLjg3NSAxNDAuNSAxLjg3NUMxMzIuODEyNSAxLjg3NSAxMjYuNjI1IDcuMDg3NSAxMjYuNjI1IDE0Ljc1VjMwLjI1SDEzMi4xMjVaIiBmaWxsPSIjZmY2YjZiIi8+PHBhdGggZD0iTTE4NS4yNSA3Ljc1VjI5LjI1SDE3Mi41VjE4LjYyNUMxNzIuNSAxMi4xODc1IDE3Ny44MTI1IDcuODc1IDE4NC4yNSA3Ljg3NUMxODQuNTUgNy44NzUgMTg0LjkgNy44OTU4MyAxODUuMjUgNy45Mzc1VjcuNzVaIiBmaWxsPSIjZmY2YjZiIi8+PC9zdmc+" class="logo">
+                    </a>
+                    <a class="menu-item" href="about.html">Той жайлы</a>
+                    <a class="menu-item" href="services.html">Қызметтер</a>
+                    <a class="menu-item" href="gallery.html">Галерея</a>
+                    <a class="menu-item" href="contact.html">Байланыс</a>
+                </div>
+                <div class="col-6" style="display: flex; justify-content: flex-end; align-items: center;">
+                    <a href="tel:+77066403655" class="phone-link">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb94PSIwIDAgMjAgMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE0LjA4MyAxMS4wODNDMTMuMjUgOS44MzMgMTIuNDE3IDkgMTEuMTY3IDguMTY3TDkuOTU4MzMgMTguMzc1QzUuMzc1IDE4Ljg3NSA4LjA0MTY3IDE3Ljg3NSA5Ljk1ODMzIDE1Ljk1ODNDMTEuODc1IDE0LjA0MTcgMTIuODc1IDExLjM3NSAxMi4zNzUgNy45NTgzM0wyLjE2NjY3IDE4LjE2N0MzLjA4MzMzIDE3LjMzMyAzLjkxNjY3IDE2LjUgNS4xNjY2NyAxNS42NjZDNS40NTgzMyAxNS40NTgzIDUuNjY2NjcgMTUuMTY2NyA1Ljg3NSAxNC44NzVDNi4wODMzMyAxNC41ODMzIDYuMTY2NjcgMTQuMzMzMyA2LjE2NjY3IDE0LjA4MzNDNi4xNjY2NyAxMy44MzMzIDYuMDgzMzMgMTMuNTgzMyA1Ljg3NSAxMy4yOTE3TDMuNjI1IDExLjA0MTdDMy4zMzMzMyAxMC43NSAzLjA4MzMzIDEwLjY2NjcgMi44MzMzMyAxMC42NjY3QzIuNTgzMzMgMTAuNjY2NyAyLjMzMzMzIDEwLjc1IDIuMDQxNjcgMTAuOTU4M0MxLjM3NSAxMS40NTgzIDAuODc1IDExLjk1ODMgMC41NDE2NjcgMTIuNDU4M0MwLjIwODMzMyAxMi45NTgzIDAgMTMuNDE2NyAwIDEzLjgzMzNDMCAxNS41IDAuNjY2NjY3IDE3LjA0MTcgMiAxOC4zNzVDMy4zMzMzMyAxOS43MDgzIDQuODc1IDIwLjM3NSA2LjYyNSAyMC4zNzVDNy4wNDE2NyAyMC4zNzUgNy41IDIwLjE2NjcgOCAxOS43NUM4LjUgMTkuNDE2NyA5IDE4LjkxNjcgOS41IDE4LjI1QzEwIDE3LjU4MzMgMTAuNSAxNy4wODMzIDExIDE2Ljc1QzExLjI1IDE2LjU0MTcgMTEuNSAxNi40NTgzIDExLjc1IDE2LjQ1ODMzQzEyIDE2LjQ1ODMzIDEyLjI1IDE2LjU0MTcgMTIuNTQxNyAxNi43NUwxNC43OTE3IDE5QzE1LjA4MzMgMTkuMjA4MyAxNS4zMzMzIDE5LjI5MTcgMTUuNTgzMyAxOS4yOTE3QzE1LjgzMzMgMTkuMjkxNyAxNi4wODMzIDE5LjIwODMgMTYuMzc1IDE5QzE2Ljk1ODMgMTguNTgzMyAxNy40NTgzIDE4LjA4MzMgMTcuODc1IDE3LjVDMTguMjkxNyAxNi45MTY3IDE4LjUgMTYuNDE2NyAxOC41IDE2QzE4LjUgMTUuNzgzMyAxOC40MTY3IDE1LjU0MTcgMTguMjUgMTUuMjc1QzE4LjA4MzMgMTUuMDA4MyAxNy44NzUgMTQuNzA4MyAxNy42MjUgMTQuMzc1QzE3LjM3NSAxNC4wNDE3IDE3LjEyNSAxMy43OTE3IDE2Ljg3NSAxMy42MjVDMTYuNjI1IDEzLjQ1ODMgMTYuMzc1IDEzLjM3NSAxNi4xMjUgMTMuMzc1QzE1Ljg3NSAxMy4zNzUgMTUuNjI1IDE3LjQ1ODMgMTUuMzc1IDEzLjYyNUwxNC4wODMgMTQuOTE2N1YxMS4wODNaIiBmaWxsPSIjZmY2YjZiIi8+PC9zdmc+" alt="Телефон" class="phone-icon">
+                        +7 706 640-36-55
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Той сайтына қош келдіңіз!</h1>
+            <p>Сізге және жақындарыңызға есте қаларлық оқиға ұйымдастыруға көмектесеміз. Балалар мерекелерінен корпоративтік іс-шараларға дейін.</p>
+            <a href="#contact" class="btn">Іс-шараны тапсырыс беру</a>
+        </section>
+
+        <section class="about" id="about">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Біздің компания жайлы</h2>
+                    <p>Біздің клиенттер үшін есте қаларлық сәттерді қалай жасайтынымыз жайлы көбірек біліңіз</p>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Той - кез келген күрделіліктегі мерекелерді ұйымдастыру</h3>
+                        <p>Біз мерекелерді ұйымдастыру нарығында 10 жылдан астам уақыт бойы жұмыс істеп келеміз. Біздің кәсіпқойлар тобы сіздің іс-шараңызды дайындау және өткізу бойынша барлық хлопоттарды өз мойнына алуға дайын.</p>
+                        <p>Идеядан іске асыруға дейін - сіздің мерекеңіз шынымен есте қаларлық болуы үшін дайындықтың әр кезеңін қамтамасыз етеміз.</p>
+                        <p>Біздің мамандар әртүрлі іс-шараларды ұйımдастыруда көп тәжірибеге ие: балалардың туған күндері, үйлену тойлары, корпоративтер, мерейтойлар және басқа да мерекелер.</p>
+                        <a href="about.html" class="btn">Біз жайлы көбірек</a>
+                    </div>
+                    <div class="about-image">
+                        <img src="https://qarmaqshy-tany.kz/uploads/posts/2024-07/1720071058_1.jpg" alt="Казахский той">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="services" id="services">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Біздің қызметтер</h2>
+                    <p>Біз іс-шараларды ұйымдастыру және өткізу бойынша толық спектрлік қызметтерді ұсынамыз</p>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <i class="fas fa-birthday-cake"></i>
+                            </div>
+                            <h3>Балалар мерекелері</h3>
+                            <p>Аниматорлар мен ойын-сауықпен туған күндерді, бітірулерді және басқа да балалық іс-шараларды ұйымдастыру.</p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <i class="fas fa-ring"></i>
+                            </div>
+                            <h3>Үйлену тойлары</h3>
+                            <p>Үйлену тойын толық ұйымдастыру: орын таңдаудан бастап ойын-сауық бағдарламасына дейін.</p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <h3>Корпоративтер</h3>
+                            <p>Корпоративтік іс-шараларды, тимбилдингтерді, жаңа жылдық кештерді және компаниялардың мерейтойларын өткізу.</p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <i class="fas fa-music"></i>
+                            </div>
+                            <h3>Музыкалық серіктестік</h3>
+                            <p>Кез келген іс-шара үшін DJ, тірі музыка және дыбыс жабдықтарын ұсыну.</p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <h3>Кейтеринг</h3>
+                            <p>Азық-түлік ұйымдастыру: фуршеттер мен кофе-брейктерден талғампаз мәзірі бар банкеттерге дейін.</p>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="service-box">
+                            <div class="service-icon">
+                                <i class="fas fa-photo-video"></i>
+                            </div>
+                            <h3>Фото және видео түсіру</h3>
+                            <p>Естелік сәттерді сақтау үшін сіздің іс-шараңыздың кәсіби фото және бейне түсірілімі.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="gallery" id="gallery">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Біздің жұмыстар галереясы</h2>
+                    <p>Біздің іс-шаралардан фотосуреттерді қараңыз</p>
+                </div>
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="https://sun9-26.userapi.com/T3slbGfOZN9Z2I_wZj_CNFotu88hNbf_xwHTNw/r56jcsAVhbc.jpg" alt="Қазақтың үйлену тойы">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://qarmaqshy-tany.kz/uploads/posts/2024-07/1720071058_1.jpg" alt="Қазақтың ұлттық киімдердегі тойы">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="http://bilimdiler.kz/oyin_sayk/uploads/posts/2021-01/1609954014_er.jpg" alt="Қазақтың дәстүрлі тойы">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://turaninfo.kz/rus/wp-content/uploads/2018/10/DSC_9866.jpg" alt="Қазақтың мерекелік дастарқаны">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://sun9-26.userapi.com/T3slbGfOZN9Z2I_wZj_CNFotu88hNbf_xwHTNw/r56jcsAVhbc.jpg" alt="Қазақтың ән-би тойы">
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://qarmaqshy-tany.kz/uploads/posts/2024-07/1720071058_1.jpg" alt="Қазақтың мерекесі">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials" id="testimonials">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Клиенттердің пікірлері</h2>
+                    <p>Біздің қызметпен қанағаттанған клиенттердің пікірлері</p>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="testimonial">
+                                                       <div class="testimonial-text">
+                                <p>Біздің қызымыздың туған күнін өткізуге көмектесті. Барлығы жоғары деңгейде ұйымдастырылған: аниматорлар, ойын-сауық, кейтеринг. Балалар өте қуанды, біз де олармен бірге балалық шаққа оралдық. Рахмет!</p>
+                            </div>
+                            <div class="testimonial-author">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Айгүл">
+                                <div>
+                                    <h4>Айгүл Мұрат</h4>
+                                    <p>Қызылорда</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="testimonial">
+                            <div class="testimonial-text">
+                                <p>Үйлену тойымызды тапсырғанымызға өте қуаныштымыз. Барлық мелочьдарға дейін ойланылған, біз тек қана қонақтарді қабылдауға көңіл бөлдік. Керемет музыка, тамақ дәмді болды, жалпы атмосфера сүйікті адамдармен бөлісінген қуанышты сезім болды.</p>
+                            </div>
+                            <div class="testimonial-author">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Ержан">
+                                <div>
+                                    <h4>Ержан Қалиев</h4>
+                                    <p>Қызылорда</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Бізбен байланысыңыз</h2>
+                    <p>Іс-шараны тапсырыс беру үшін немесе қосымша ақпарат алу үшін форманы толтырыңыз</p>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="contact-form">
+                            <form id="contactForm">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input type="text" name="name" class="form-control" placeholder="Аты-жөніңіз" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <input type="tel" name="phone" class="form-control" placeholder="Телефон нөмірі" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" class="form-control" placeholder="Электрондық пошта">
+                                </div>
+                                <div class="form-group">
+                                    <textarea name="message" class="form-control" placeholder="Хабарлама мәтіні" required></textarea>
+                                </div>
+                                <button type="submit" class="btn">Жіберу</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4>Мекен-жайымыз</h4>
+                                    <p>Қызылорда қаласы, Kzo hub</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h4>Телефон</h4>
+                                    <p>+7 706 640-36-55</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4>Электрондық пошта</h4>
+                                    <p>info@toi-organizer.kz</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="col-4">
+                    <div class="footer-logo">
+                        <img width="194" height="37" alt="logo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTk0IiBoZWlnaHQ9IjM3IiB2aWV3Qm94PSIwIDAgMTk0IDM3IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0zMCAxMC41QzMxLjY1NjkgOC44NDMxNSAzMy43ODEzIDcuNzUgMzYuMTI1IDcuNzVDMzguNDY4OCA3Ljc1IDQwLjU5MzEgOC44NDMxNSA0Mi4yNSAxMC41TDQyLjI1IDcuNzVINTVWMTguNjI1QzU1IDI1LjA2MjUgNDkuNjg3NSAzMC4zNzUgNDMuMjUgMzAuMzc1QzM2LjgxMjUgMzAuMzc1IDMxLjUgMjUuMDYyNSAzMS41IDE4LjYyNVY3Ljc1SDQyLjI1VjEwLjVDNDAuNTkzMSA4Ljg0MzE1IDM4LjQ2ODggNy43NSAzNi4xMjUgMy43NUMzMy43ODEzIDcuNzUgMzEuNjU2OSA4Ljg0MzE1IDMwIDEwLjVWMTAuNVoiIGZpbGw9IiNmZjZiNmIiLz48cGF0aCBkPSJNODYuNSA3Ljc1VjI5LjI1SDczLjc1VjE4LjYyNUM3My43NSAxMi4xODc1IDc5LjA2MjUgNy44NzUgODUuNSA3Ljg3NUM4NS44IDcuODc1IDg2LjE1IDcuODk1ODMgODYuNSA3LjkzNzVWNy43NVoiIGZpbGw9IiNmZjZiNmIiLz48cGF0aCBkPSJNMTE2LjI1IDcuNzVWMTguNjI1QzExNi4yNSAyNS4wNjI1IDExMC45Mzc1IDMwLjM3NSAxMDQuNSAzMC4zNzVDOTguMDYyNSAzMC4zNzUgOTIuNzUgMjUuMDYyNSA5Mi43NSAxOC42MjVWNy43NUgxMDUuNVYxOC42MjVDMTA1LjUgMTkuODI4MSAxMDYuNDQ2OSAyMC43NzUgMTA3LjY1IDIwLjc3NUMxMDguODUzMSAyMC43NzUgMTA5LjggMTkuODI4MSAxMDkuOCAxOC42MjVWNy43NUgxMTYuMjVaIiBmaWxsPSIjZmY2YjZiIi8+PHBhdGggZD0iTTEzMi4xMjUgMzAuMjVWMTQuNzVDMTMyLjEyNSAxMi4wNjI1IDEzNC4xODc1IDEwIDEzNi44NzUgMTBDMTM5LjU2MjUgMTAgMTQxLjYyNSAxMi4wNjI1IDE0MS42MjUgMTQuNzVWMzAuMjVIMTU0LjM3NVYxNC43NUMxNTQuMzc1IDcuMDg3NSAxNDguMTg3NSAxLjg3NSAxNDAuNSAxLjg3NUMxMzIuODEyNSAxLjg3NSAxMjYuNjI1IDcuMDg3NSAxMjYuNjI1IDE0Ljc1VjMwLjI1SDEzMi4xMjVaIiBmaWxsPSIjZmY2YjZiIi8+PHBhdGggZD0iTTE4NS4yNSA3Ljc1VjI5LjI1SDE3Mi41VjE4LjYyNUMxNzIuNSAxMi4xODc1IDE3Ny44MTI1IDcuODc1IDE4NC4yNSA3Ljg3NUMxODQuNTUgNy44NzUgMTg0LjkgNy44OTU4MyAxODUuMjUgNy45Mzc1VjcuNzVaIiBmaWxsPSIjZmY2YjZiIi8+PC9zdmc+">
+                    </div>
+                    <p>Біз сіздің мерекеңізді есте қаларлық жасауға көмектесеміз. Біздің кәсіпқойлар тобы сіздің іс-шараңызды дайындау және өткізу бойынша барлық хлопоттарды өз мойнына алады.</p>
+                </div>
+                <div class="col-4">
+                    <div class="footer-links">
+                        <h4>Беттер</h4>
+                        <a href="about.html">Той жайлы</a>
+                        <a href="services.html">Қызметтер</a>
+                        <a href="gallery.html">Галерея</a>
+                        <a href="contact.html">Байланыс</a>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="footer-links">
+                        <h4>Қызметтер</h4>
+                        <a href="#services">Балалар мерекелері</a>
+                        <a href="#services">Үйлену тойлары</a>
+                        <a href="#services">Корпоративтер</a>
+                        <a href="#services">Кейтеринг</a>
+                    </div>
+                </div>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Той - Мерекелерді ұйымдастыру. Барлық құқықтар қорғалған.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Плавная прокрутка к якорям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Обработка формы
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = {
+                name: formData.get('name') || this.querySelector('input[placeholder*="Аты-жөніңіз"]').value,
+                phone: formData.get('phone') || this.querySelector('input[placeholder*="Телефон"]').value,
+                email: formData.get('email') || this.querySelector('input[placeholder*="Электрондық пошта"]').value,
+                message: formData.get('message') || this.querySelector('textarea[placeholder*="Хабарлама"]').value
+            };
+            
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert(result.message);
+                    this.reset();
+                } else {
+                    alert(result.message);
+                }
+            } catch (error) {
+                console.error('Ошибка:', error);
+                alert('Қате орын алды. Қайталап көріңіз.');
+            }
+        });
+
+        // Фиксированная шапка
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 2px 15px rgba(0,0,0,0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+        });
+    </script>
+    
+</body>
+</html>

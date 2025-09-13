@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Галерея - Мерекелерді ұйымдастыру</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -15px;
+        }
+        
+        .col-6 {
+            width: 50%;
+            padding: 0 15px;
+        }
+        
+        .col-12 {
+            width: 100%;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 3px;
+            background: #ff6b6b;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        /* Шапка */
+        .header {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header .row {
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .logo {
+            height: 40px;
+        }
+        
+        .menu-item {
+            margin-left: 30px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .menu-item:hover, .menu-item.active {
+            color: #ff6b6b;
+        }
+        
+        .phone-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .phone-icon {
+            margin-right: 10px;
+            height: 20px;
+        }
+        
+        /* Главный баннер */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://qarmaqshy-tany.kz/uploads/posts/2024-07/1720071058_1.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 180px 0 100px;
+            margin-top: 77px;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Фильтры */
+        .filters {
+            background: #f9f9f9;
+            padding: 40px 0;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .filter-btn {
+            background: white;
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        /* Галерея */
+        .gallery {
+            background: white;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            height: 300px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7));
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-info {
+            color: white;
+        }
+        
+        .gallery-info h3 {
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .gallery-info p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+        }
+        
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            max-height: 80%;
+            object-fit: contain;
+            margin-top: 5%;
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #ff6b6b;
+        }
+        
+        /* Статистика */
+        .stats {
+            background: #f9f9f9;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+        }
+        
+        /* Футер */
+        footer {
+            background: #222;
+            color: white;
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .footer-links h4 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links a {
+            display: block;
+            color: #ddd;
+            text-decoration: none;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #ff6b6b;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #444;
+            color: white;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: #ff6b6b;
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            padding-top: 20px;
+            border-top: 1px solid #444;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .col-6 {
+                width: 100%;
+            }
+            
+            .header .row {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            .menu-item {
+                margin: 0 15px;
+            }
+            
+            .hero {
+                padding: 150px 0 80px;
+                margin-top: 126px;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .filter-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-6" style="display: flex; align-items: center;">
+                    <a href="/">
+                        <img width="194" height="37" alt="logo" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTk0IiBoZWlnaHQ9IjM3IiB2aWV3Qm94PSIwIDAgMTk0IDM3IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0zMCAxMC41QzMxLjY1NjkgOC44NDMxNSAzMy43ODEzIDcuNzUgMzYuMTI1IDcuNzVDMzguNDY4OCA3Ljc1IDQwLjU5MzEgOC44NDMxNSA0Mi4yNSAxMC41TDQyLjI1IDcuNzVINTVWMTguNjI1QzU1IDI1LjA2MjUgNDkuNjg3NSAzMC4zNzUgNDMuMjUgMzAuMzc1QzM2LjgxMjUgMzAuMzc1IDMxLjUgMjUuMDYyNSAzMS41IDE4LjYyNVY3Ljc1SDQyLjI1VjEwLjVDNDAuNTkzMSA4Ljg0MzE1IDM4LjQ2ODggNy43NSAzNi4xMjUgNy43NUMzMy43ODEzIDcuNzUgMzEuNjU2OSA4Ljg0MzE1IDMwIDEwLjVWMTAuNVoiIGZpbGw9IiNmZjZiNmIiLz48cGF0aCBkPSJNODYuNSA3Ljc1VjI5LjI1SDczLjc1VjE4LjYyNUM3My43NSAxMi4xODc1IDc5LjA2MjUgNy44NzUgODUuNSA3Ljg3NUM4NS44IDcuODc1IDg2LjE1IDcuODk1ODMgODYuNSA3LjkzNzVWNy43NVoiIGZpbGw9IiNmZjZiNmIiLz48cGF0aCBkPSJNMTE2LjI1IDcuNzVWMTguNjI1QzExNi4yNSAyNS4wNjI1IDExMC45Mzc1IDMwLjM3NSAxMDQuNSAzMC4zNzVDOTguMDYyNSAzMC4zNzUgOTIuNzUgMjUuMDYyNSA5Mi43NSAxOC42MjVWNy43NUgxMDUuNVYxOC42MjVDMTA1LjUgMTkuODI4MSAxMDYuNDQ2OSAyMC43NzUgMTA3LjY1IDIwLjc3NUMxMDguODUzMSAyMC43NzUgMTA5LjggMTkuODI4MSAxMDkuOCAxOC42MjVWNy43NUgxMTYuMjVaIiBmaWxsPSIjZmY2YjZiIi8+PHBhdGggZD0iTTEzMi4xMjUgMzAuMjVWMTQuNzVDMTMyLjEyNSAxMi4wNjI1IDEzNC4xODc1IDEwIDEzNi44NzUgMTBDMTM5LjU2MjUgMTAgMTQxLjYyNSAxMi4wNjI1IDE0MS42MjUgMTQuNzVWMzAuMjVIMTU0LjM3NVYxNC43NUMxNTQuMzc1IDcuMDg3NSAxNDguMTg3NSAxLjg3NSAxNDAuNSAxLjg3NUMxMzIuODEyNSAxLjg3NSAxMjYuNjI1IDcuMDg3NSAxMjYuNjI1IDE0Ljc1VjMwLjI1SDEzMi4xMjVaIiBmaWxsPSIjZmY2YjZiIi8+PHBhdGggZD0iTTE4NS4yNSA3Ljc1VjI5LjI1SDE3Mi41VjE4LjYyNUMxNzIuNSAxMi4xODc1IDE3Ny44MTI1IDcuODc1IDE4NC4yNSA3Ljg3NUMxODQuNTUgNy44NzUgMTg0LjkgNy44OTU4MyAxODUuMjUgNy45Mzc1VjcuNzVaIiBmaWxsPSIjZmY2YjZiIi8+PC9zdmc+" class="logo">
+                    </a>
+                    <a class="menu-item" href="about.html">Той жайлы</a>
+                    <a class="menu-item" href="services.html">Қызметтер</a>
+                    <a class="menu-item active" href="gallery.html">Галерея</a>
+                    <a class="menu-item" href="contact.html">Байланыс</a>
+                </div>
+                <div class="col-6" style="display: flex; justify-content: flex-end; align-items: center;">
+                    <a href="tel:+77066403655" class="phone-link">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb94PSIwIDAgMjAgMjAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTE0LjA4MyAxMS4wODNDMTMuMjUgOS44MzMgMTIuNDE3IDkgMTEuMTY3IDguMTY3TDkuOTU4MzMgMTguMzc1QzUuMzc1IDE4Ljg3NSA4LjA0MTY3IDE3Ljg3NSA5Ljk1ODMzIDE1Ljk1ODNDMTEuODc1IDE0LjA0MTcgMTIuODc1IDExLjM3NSAxMi4zNzUgNy45NTgzM0wyLjE2NjY3IDE4LjE2N0MzLjA4MzMzIDE3LjMzMyAzLjkxNjY3IDE2LjUgNS4xNjY2NyAxNS42NjZDNS40NTgzMyAxNS40NTgzIDUuNjY2NjcgMTUuMTY2NyA1Ljg3NSAxNC44NzVDNi4wODMzMyAxNC41ODMzIDYuMTY2NjcgMTQuMzMzMyA2LjE2NjY3IDE0LjA4MzNDNi4xNjY2NyAxMy44MzMzIDYuMDgzMzMgMTMuNTgzMyA1Ljg3NSAxMy4yOTE3TDMuNjI1IDExLjA0MTdDMy4zMzMzMyAxMC43NSAzLjA4MzMzIDEwLjY2NjcgMi44MzMzMyAxMC42NjY3QzIuNTgzMzMgMTAuNjY2NyAyLjMzMzMzIDEwLjc1IDIuMDQxNjcgMTAuOTU4M0MxLjM3NSAxMS40NTgzIDAuODc1IDExLjk1ODMgMC41NDE2NjcgMTIuNDU4M0MwLjIwODMzMyAxMi45NTgzIDAgMTMuNDE2NyAwIDEzLjgzMzNDMCAxNS41IDAuNjY2NjY3IDE3LjA0MTcgMiAxOC4zNzVDMy4zMzMzMyAxOS43MDgzIDQuODc1IDIwLjM3NSA2LjYyNSAyMC4zNzVDNy4wNDE2NyAyMC4zNzUgNy41IDIwLjE2NjcgOCAxOS43NUM4LjUgMTkuNDE2NyA5IDE4LjkxNjcgOS41IDE4LjI1QzEwIDE3LjU4MzMgMTAuNSAxNy4wODMzIDExIDE2Ljc1QzExLjI1IDE2LjU0MTcgMTEuNSAxNi40NTgzIDExLjc1IDE2LjQ1ODMzQzEyIDE2LjQ1ODMzIDEyLjI1IDE2LjU0MTcgMTIuNTQxNyAxNi43NUwxNC43OTE3IDE5QzE1LjA4MzMgMTkuMjA4MyAxNS4zMzMzIDE5LjI5MTcgMTUuNTgzMyAxOS4yOTE3QzE1LjgzMzMgMTkuMjkxNyAxNi4wODMzIDE5LjIwODMgMTYuMzc1IDE5QzE2Ljk1ODMgMTguNTgzMyAxNy40NTgzIDE4LjA4MzMgMTcuODc1IDE3LjVDMTguMjkxNyAxNi45MTY3IDE4LjUgMTYuNDE2NyAxOC41IDE2QzE4LjUgMTUuNzgzMyAxOC40MTY3IDE1LjU0MTcgMTguMjUgMTUuMjc1QzE4LjA4MzMgMTUuMDA4MyAxNy44NzUgMTQuNzA4MyAxNy42MjUgMTQuMzc1QzE3LjM3NSAxNC4wNDE3IDE3LjEyNSAxMy43OTE3IDE2Ljg3NSAxMy42MjVDMTYuNjI1IDEzLjQ1ODMgMTYuMzc1IDEzLjM3NSAxNi4xMjUgMTMuMzc1QzE1Ljg3NSAxMy4zNzUgMTUuNjI1IDE3LjQ1ODMgMTUuMzc1IDEzLjYyNUwxNC4wODMgMTQuOTE2N1YxMS4wODNaIiBmaWxsPSIjZmY2YjZiIi8+PC9zdmc+" alt="Телефон" class="phone-icon">
+                        +7 706 640-36-55
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Біздің жұмыстар галереясы</h1>
+            <p>Біздің өткізген іс-шаралардан фотосуреттер мен естелік сәттер</p>
+        </section>
+
+        <section class="filters">
+            <div class="container">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">Барлығы</button>
+                    <button class="filter-btn" data-filter="wedding">Үйлену тойлары</button>
+                    <button class="filter-btn" data-filter="birthday">Балалар мерекелері</button>
+                    <button class="filter-btn" data-filter="corporate">Корпоративтер</button>
+                    <button class="filter-btn" data-filter="national">Ұлттық мерекелер</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="gallery">
+            <div class="container">
+                <div class="gallery-grid">
+                    <div class="gallery-item" data-category="wedding">
+                        <img src="https://sun9-26.userapi.com/T3slbGfOZN9Z2I_wZj_CNFotu88hNbf_xwHTNw/r56jcsAVhbc.jpg" alt="Үйлену тойы">
+                        <div class="gallery-overlay">
+                            <div class="gallery-info">
+                                <h3>Үйлену тойы</h3>
+                                <p>Қызылорда, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="birthday">
+                        <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Балалар туған күні">
+                        <div class="gallery-overlay">
+                            <div class="gallery-info">
+                                <h3>Балалар туған күні</h3>
+                                <p>Қызылорда, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="national">
+                        <img src="https://qarmaqshy-tany.kz/uploads/posts/2024-07/1720071058_1.jpg" alt="Ұлттық мереке">
+                        <div class="gallery-overlay">
+                            <div class="gallery-info">
+                                <h3>Ұлттық мереке</h3>
+                                <p>Қызылорда, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="corporate">
+                        <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Корпоративтік іс-шара">
+                        <div class="gallery-overlay">
+                            <div class="gallery-info">
+                                <h3>Корпоративтік іс-шара</h3>
+                                <p>Қызылорда, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="wedding">
+                        <img src="https://turaninfo.kz/rus/wp-content/uploads/2018/10/DSC_9866.jpg" alt="Қазақтың үйлену тойы">
+                        <div class="gallery-overlay">
+                            <div class="gallery-info">
+                                <h3>Қазақтың үйлену тойы</h3>
+                                <p>Қызылорда, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="birthday">
+                        <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Балалар мерекесі">
+                        <div class="gallery-overlay">
+                            <div class="gallery-info">
+                                <h3>Балалар мерекесі</h3>
+                                <p>Қызылорда, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="national">
+                        <img src="http://bilimdiler.kz/oyin_sayk/uploads/posts/2021-01/1609954014_er.jpg" alt="Дәстүрлі той">
+                        <div class="gallery-overlay">
+                            <div class="gallery-info">
+                                <h3>Дәстүрлі той</h3>
+                                <p>Қызылорда, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="corporate">
+                        <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Компания мерейтойы">
+                        <div class="gallery-overlay">
+                            <div class="gallery-info">
+                                <h3>Компания мерейтойы</h3>
+                                <p>Қызылорда, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="wedding">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Заманауи үйлену тойы">
+                        <div class="gallery-overlay">
+                            <div class="gallery-info">
+                                <h3>Заманауи үйлену тойы</h3>
+                                <p>Қызылорда, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="birthday">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Жасөспірімдер мерекесі">
+                        <div class="gallery-overlay">
+                            <div class="gallery-info">
+                                <h3>Жасөспірімдер мерекесі</h3>
+                                <p>Қызылорда, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="national">
+                        <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Ұлттық киімдердегі мереке">
+                        <div class="gallery-overlay">
+                            <div class="gallery-info">
+                                <h3>Ұлттық киімдердегі мереке</h3>
+                                <p>Қызылорда, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-item" data-category="corporate">
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Жаңа жылдық корпоратив">
+                        <div class="gallery-overlay">
+                            <div class="gallery-info">
+                                <h3>Жаңа жылдық корпоратив</h3>
+                                <p>Қызылорда, 2023</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Біздің нәтижелер</h2>
+                    <p>Жылдар бойы жинақталған тәжірибе мен сәтті жобалар</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Өткізілген іс-шаралар</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1000+</div>
+                        <div class="stat-label">Қанағаттанған клиенттер</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Жыл тәжірибе</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Кәсіпқой мамандар</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Модальное окно -->
+    <div id="modal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="col-6">
+                    <div class="footer-links">
+                        <h4>Беттер</h4>
+                        <a href="/">Басты бет</a>
+                        <a href="about.html">Той жайлы</a>
+                        <a href="services.html">Қызметтер</a>
+                        <a href="gallery.html">Галерея</a>
+                        <a href="contact.html">Байланыс</a>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="footer-links">
+                        <h4>Байланыс</h4>
+                        <p>+7 706 640-36-55</p>
+                        <p>info@toi-organizer.kz</p>
+                        <p>Қызылорда қаласы, Kzo hub</p>
+                    </div>
+                </div>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Той - Мерекелерді ұйымдастыру. Барлық құқықтар қорғалған.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Фильтрация галереи
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Убираем активный класс со всех кнопок
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Добавляем активный класс к нажатой кнопке
+                button.classList.add('active');
+
+                const filter = button.getAttribute('data-filter');
+
+                galleryItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                        item.style.animation = 'fadeIn 0.5s ease-in-out';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Модальное окно для изображений
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modalImg');
+        const closeBtn = document.getElementsByClassName('close')[0];
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const img = item.querySelector('img');
+                modal.style.display = 'block';
+                modalImg.src = img.src;
+                modalImg.alt = img.alt;
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Закрытие модального окна по Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Плавная прокрутка к якорям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Фиксированная шапка
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 2px 15px rgba(0,0,0,0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+        });
+
+        // Анимация появления элементов
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Наблюдаем за элементами галереи
+        galleryItems.forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(30px)';
+            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html>
