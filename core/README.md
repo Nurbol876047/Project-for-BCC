@@ -147,3 +147,4 @@ python3 bank_product_analyzer.py
 2. Добавьте TOV в `tov_rules`
 3. Обновите логику скоринга в `determine_best_product`
 4. Добавьте персонализацию в `generate_push_notification`
+

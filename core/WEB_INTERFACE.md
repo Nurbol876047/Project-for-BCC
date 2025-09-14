@@ -118,3 +118,4 @@ GET /api/bank-analysis
 - **Главная страница**: http://localhost:3000/
 - **Анализ банковских продуктов**: http://localhost:3000/bank-analysis
 - **API результатов**: http://localhost:3000/api/bank-analysis
+

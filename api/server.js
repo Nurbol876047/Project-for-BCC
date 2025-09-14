@@ -133,7 +133,7 @@ app.get('/api/bank-analysis', (req, res) => {
         };
         
         results.forEach(row => {
-            const product = row.best_product;
+            const product = row.product || row.best_product;  // поддержка нового формата ТЗ
             stats.products[product] = (stats.products[product] || 0) + 1;
         });
         
